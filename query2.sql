@@ -16,6 +16,7 @@ LIMIT 50
 
 -- Melakukan join movies dan roles berdasarkan table actors
 SELECT
+    actors.id,
     actors.first_name AS actor_firstName,
     actors.last_name AS actor_lastName,
     actors.gender AS actor_gender,
