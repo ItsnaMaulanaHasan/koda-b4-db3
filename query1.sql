@@ -1,4 +1,4 @@
--- Mencari moive dengan tahun liris lebih dari tahun 2000
+-- Mencari movie dengan tahun liris lebih dari tahun 2000
 SELECT * FROM movies WHERE year > 2000
 
 -- Mencari actors dengan akhiran 's'
