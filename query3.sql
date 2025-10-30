@@ -1,13 +1,15 @@
 -- Mendapatkan director, dan berapa genre yang di direct
-SELECT directors.first_name, directors.last_name, COUNT(
+SELECT directors.first_name, directors.last_name, string_agg(
+        directors_genres.genre, ', '
+        ORDER BY directors_genres.genre
+    ), COUNT(
         DISTINCT directors_genres.genre
     ) AS total_genre
 FROM directors
     JOIN directors_genres ON directors.id = directors_genres.director_id
 GROUP BY
-    directors.id,
-    directors.first_name,
-    directors.last_name;
+    directors.id
+ORDER BY directors.first_name;
 
 -- Mendapatkan actors yang memiliki roles lebih dari 5
 SELECT actors.first_name, actors.last_name, string_agg(
