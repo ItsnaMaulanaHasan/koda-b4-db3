@@ -13,7 +13,7 @@ ORDER BY directors.first_name;
 
 -- Mendapatkan actors yang memiliki roles lebih dari 5
 SELECT actors.first_name, actors.last_name, string_agg(
-        roles.role, ', '
+        roles.role, '; '
         ORDER BY roles.role
     ) AS roles, COUNT(DISTINCT roles.role) AS total_role
 FROM actors
@@ -27,13 +27,11 @@ HAVING
 ORDER BY total_role, actors.first_name;
 
 -- Mendapatkan directors paling produktif sepanjang masa
-SELECT directors.first_name, directors.last_name, COUNT(movies_directors.director_id)
+SELECT directors.first_name, directors.last_name, COUNT(movies_directors.director_id) AS total_movie
 FROM directors
     JOIN movies_directors ON directors.id = movies_directors.director_id
 GROUP BY
-    directors.id,
-    directors.first_name,
-    directors.last_name
+    directors.id
 HAVING
     COUNT(movies_directors.director_id) = (
         SELECT MAX(movie_count)
