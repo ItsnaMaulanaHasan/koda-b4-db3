@@ -1,7 +1,7 @@
 -- Mendapatkan director, dan berapa genre yang di direct
 SELECT directors.first_name, directors.last_name, COUNT(
         DISTINCT directors_genres.genre
-    ) as total_genre
+    ) AS total_genre
 FROM directors
     JOIN directors_genres ON directors.id = directors_genres.director_id
 GROUP BY
@@ -10,15 +10,19 @@ GROUP BY
     directors.last_name;
 
 -- Mendapatkan actors yang memiliki roles lebih dari 5
-SELECT actors.first_name, actors.last_name, COUNT(roles.actor_id) AS total_roles
+SELECT actors.first_name, actors.last_name, string_agg(
+        roles.role, ', '
+        ORDER BY roles.role
+    ) AS roles, COUNT(DISTINCT roles.role) AS total_role
 FROM actors
     JOIN roles ON actors.id = roles.actor_id
+WHERE
+    roles.role != ''
 GROUP BY
-    actors.id,
-    actors.first_name,
-    actors.last_name
+    actors.id
 HAVING
-    COUNT(roles.actor_id) > 5;
+    COUNT(DISTINCT roles.role) > 5
+ORDER BY total_role, actors.first_name;
 
 -- Mendapatkan directors paling produktif sepanjang masa
 SELECT directors.first_name, directors.last_name, COUNT(movies_directors.director_id)
